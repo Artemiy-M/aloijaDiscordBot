@@ -1,0 +1,5 @@
+commands\rollcube\CubeParser.class
+commands\rollcube\RollCube.class
+Main.class
+commands\rollcube\Cube.class
+MessageListener.class
