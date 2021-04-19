@@ -2,6 +2,25 @@ package commands.rollcube;
 
 public class RollCube {
     private final String START_MESSAGE = " rolled ";
+    private String plusMessage = "+";
+
+    public String roll(int y, int x, int z, boolean plusPlus) {
+        if (plusPlus && z != 0) {
+            if (z < 0) {
+                plusMessage = "";
+            }
+            return rollPlusPlus(y, x, z);
+        }
+
+        if (z == 0) {
+            return rollYdx(y, x);
+        } else {
+            if (z < 0) {
+                plusMessage = "";
+            }
+            return rollydxPlusZ(y, x, z);
+        }
+    }
 
     private String roll1dx(int x) {
         int result = new Cube().roll(x);
@@ -23,7 +42,7 @@ public class RollCube {
         int roll = new Cube().roll(x);
         int result = roll + z;
 
-        return START_MESSAGE + roll + "+" + z + "=" + result;
+        return START_MESSAGE + roll + plusMessage + z + "=" + result;
     }
 
     private String rollydxPlusZ(int y, int x, int z) {
@@ -36,15 +55,42 @@ public class RollCube {
 
         int summ = calcSumm(rolls, z);
 
-        return START_MESSAGE + reply + "+" + z + "=" + summ;
+        return START_MESSAGE + reply + plusMessage + z + "=" + summ;
     }
 
-    public String roll(int y, int x, int z) {
-        if (z == 0) {
-            return rollYdx(y, x);
-        } else {
-            return rollydxPlusZ(y, x , z);
+    private String rollPlusPlus(int y, int x, int z) {
+        if (y <= 1) {
+            return roll1dxPlusZ(x, z);
         }
+
+        int[] rolls = getRolls(y, x);
+        int[] finalRolls = addPlusToRolls(rolls, z);
+        String reply =getPlusRollsMessage(finalRolls, z);
+
+        int summ = calcSumm(rolls, 0);
+
+        return START_MESSAGE + reply + "=" + summ;
+    }
+
+    private int[] addPlusToRolls(int[] rolls, int z) {
+        for (int i = 0; i < rolls.length; i++) {
+            rolls[i] = rolls[i] + z;
+        }
+        return rolls;
+    }
+
+    private String getPlusRollsMessage(int[] rolls, int z) {
+        StringBuilder reply = new StringBuilder("(");
+        for (int i = 0; i < rolls.length; i++) {
+            if (i == rolls.length-1) {
+                reply.append(rolls[i]).append("(").append(rolls[i]-z).append(plusMessage).append(z).append(")");
+            } else {
+                reply.append(rolls[i]).append("(").append(rolls[i]-z).append(plusMessage).append(z).append(")").append("+");
+            }
+        }
+        reply.append(")");
+
+        return reply.toString();
     }
 
     private int calcSumm(int[] rolls, int z) {
