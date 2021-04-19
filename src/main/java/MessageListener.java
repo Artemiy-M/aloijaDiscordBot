@@ -8,8 +8,8 @@ public class MessageListener extends ListenerAdapter {
         String author = event.getAuthor().getName();
         String messageText = event.getMessage().getContentRaw();
 
-        if (messageText.startsWith("/r ") && messageText.contains("d")) {
-            sendMessage(event, author + new CubeParser(messageText).roll());
+        if (messageText.startsWith("/r ")) {
+            sendMessage(event, author + new CubeParser(messageText, "/r").roll());
         }
     }
 

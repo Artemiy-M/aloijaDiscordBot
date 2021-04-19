@@ -1,26 +1,31 @@
 package commands.rollcube;
 
 public class CubeParser {
-    int rollsAmount = 1;
-    int maxRoll = 1;
-    int z = 0;
-    boolean doubleModificator = false;
+    private int rollsAmount = 1;
+    private int maxRoll = 1;
+    private int z = 0;
+    private boolean doubleModificator = false;
+    private final String prefix;
+    private boolean parseError = false;
 
-    public CubeParser(String message) {
-        parseMessage(message);
+    public CubeParser(String message, String prefix) {
+        this.prefix = prefix;
+        if (message.contains("d") || message.contains("D")) {
+            parseMessage(message);
+        }
     }
 
     private void parseMessage(String message) {
-        if (message.startsWith("/r ") && message.contains("d")) {
-            String messageBody = message.split(" ")[1];
+        try {
+            String messageBody = message.replace(prefix, "").trim();
             rollsAmount = Integer.parseInt(messageBody.substring(0, 1));
-
             if (messageBody.contains("+") || messageBody.contains("-")) {
                 parseWithModificator(messageBody);
             } else {
                 maxRoll = Integer.parseInt(messageBody.substring(2));
             }
-
+        } catch (Exception e) {
+            parseError = true;
         }
     }
 
@@ -47,6 +52,9 @@ public class CubeParser {
     }
 
     public String roll() {
+        if (parseError) {
+            return "Ошибка команды";
+        }
         return new RollCube().roll(rollsAmount, maxRoll, z, doubleModificator);
     }
 }
