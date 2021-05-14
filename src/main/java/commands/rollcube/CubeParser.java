@@ -18,11 +18,12 @@ public class CubeParser {
     private void parseMessage(String message) {
         try {
             String messageBody = message.replace(prefix, "").trim();
-            rollsAmount = Integer.parseInt(messageBody.substring(0, 1));
+
+            rollsAmount = Integer.parseInt(messageBody.split("d")[0]);
             if (messageBody.contains("+") || messageBody.contains("-")) {
                 parseWithModificator(messageBody);
             } else {
-                maxRoll = Integer.parseInt(messageBody.substring(2));
+                maxRoll = Integer.parseInt(messageBody.split("d")[1]);
             }
         } catch (Exception e) {
             parseError = true;
@@ -35,16 +36,16 @@ public class CubeParser {
             modificator = "+";
         }
 
-        int modificatorPosition = messageBody.indexOf(modificator);
-
-        maxRoll = Integer.parseInt(messageBody.substring(2, modificatorPosition));
+        String dAmount = messageBody.split("d")[1];
+        int modificatorPosition = dAmount.indexOf(modificator);
+        maxRoll = Integer.parseInt(dAmount.substring(0, modificatorPosition));
 
         if (messageBody.contains(modificator + modificator)) {
             doubleModificator = true;
             modificatorPosition++;
         }
 
-        z = Integer.parseInt(messageBody.substring(modificatorPosition+1));
+        z = Integer.parseInt(dAmount.substring(modificatorPosition+1));
 
         if (modificator.equals("-")) {
             z = -z;

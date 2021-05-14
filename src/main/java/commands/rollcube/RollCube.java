@@ -74,7 +74,7 @@ public class RollCube {
 
     private int[] addPlusToRolls(int[] rolls, int z) {
         for (int i = 0; i < rolls.length; i++) {
-            rolls[i] = rolls[i] + z;
+            rolls[i] = Math.max(rolls[i] + z, 1);
         }
         return rolls;
     }
@@ -98,8 +98,7 @@ public class RollCube {
         for (int roll : rolls) {
             summ += roll;
         }
-
-        return summ + z;
+        return Math.max(summ + z, 1);
     }
 
     private int[] getRolls(int amount, int maxRoll) {
