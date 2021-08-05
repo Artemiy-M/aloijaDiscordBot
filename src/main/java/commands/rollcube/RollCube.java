@@ -1,6 +1,7 @@
 package commands.rollcube;
 
 public class RollCube {
+
     private final String START_MESSAGE = " rolled ";
     private String plusMessage = "+";
 

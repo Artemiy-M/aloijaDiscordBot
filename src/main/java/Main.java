@@ -6,8 +6,9 @@ import javax.security.auth.login.LoginException;
 public class Main {
 
     public static void main(String[] args) throws LoginException {
+        String botToken = "";
 
-        JDA jda = JDABuilder.createDefault("NTcwMTg3NDc2MzUwNTMzNjMz.XL7idw.ph9ZN01JHtxS_oyC3ylKOD1bKJc")
+        JDA jda = JDABuilder.createDefault(botToken)
                 .build();
         jda.addEventListener(new MessageListener());
     }

@@ -1,6 +1,7 @@
 package commands.rollcube;
 
 public class CubeParser {
+
     private int rollsAmount = 1;
     private int maxRoll = 1;
     private int z = 0;
