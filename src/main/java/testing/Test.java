@@ -9,7 +9,6 @@ public class Test {
     public static void main(String[] args) throws IOException {
 
         String input = "/r 5d20-20";
-
 //                  /r 1d20
 //        Aloija rolled 10
 //        Aloija rolled 10
